@@ -31,13 +31,23 @@ class App extends React.Component {
     this.setState({ contact: actualState });
   }
 
+  /* -------------------------- // Sort by popularity ------------------------- */
+  sortByPopularity() {
+    const actualState = [...this.state.contact];
+    actualState.sort((a, b) => {
+      return a.popularity < b.popularity 
+    });
+    this.setState({ contact: actualState });
+  }
+
   render() {
     return (
       <div className="App">
-        <button onClick={(e) => this.addRandomContact()}>
+        <button onClick={() => this.addRandomContact()}>
           Add random contact
         </button>
-        <button onClick={(e) => this.sortByName()}>Sort by name</button>
+        <button onClick={() => this.sortByName()}>Sort by name</button>
+        <button onClick={() => this.sortByPopularity()}>Sort by popularity</button>
 
         <table>
           <thead>
