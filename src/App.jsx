@@ -35,42 +35,65 @@ class App extends React.Component {
   sortByPopularity() {
     const actualState = [...this.state.contact];
     actualState.sort((a, b) => {
-      return a.popularity < b.popularity 
+      return a.popularity < b.popularity;
     });
+    this.setState({ contact: actualState });
+  }
+
+  /* -------------------------------- // Delete ------------------------------- */
+  delete(index) {
+    const actualState = [...this.state.contact];
+    actualState.splice(index, 1);
     this.setState({ contact: actualState });
   }
 
   render() {
     return (
       <div className="App">
-        <button onClick={() => this.addRandomContact()}>
-          Add random contact
-        </button>
-        <button onClick={() => this.sortByName()}>Sort by name</button>
-        <button onClick={() => this.sortByPopularity()}>Sort by popularity</button>
+        <div className="btn-container">
+          <button className="btn btn-random"onClick={() => this.addRandomContact()}>
+            Add random contact
+          </button>
+          <button className="btn"onClick={() => this.sortByName()}>Sort by name</button>
+          <button className="btn"onClick={() => this.sortByPopularity()}>
+            Sort by popularity
+          </button>
+        </div>
 
-        <table>
-          <thead>
-            <tr>
-              <th>Picture</th>
-              <th>Name</th>
-              <th>Popularity</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.contact.map((contact, index) => {
-              return (
-                <tr key={index}>
-                  <td>
-                    <img src={contact.pictureUrl} alt="some text" />
-                  </td>
-                  <td>{contact.name}</td>
-                  <td>{contact.popularity}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        <div className="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Picture</th>
+                <th>Name</th>
+                <th>Popularity</th>
+                <th>Delete Celebrity</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.state.contact.map((contact, index) => {
+                return (
+                  <tr className="tr-style" key={index}>
+                    <td className="td-pic">
+                      <img src={contact.pictureUrl} alt="some text" />
+                    </td>
+                    <td>{contact.name}</td>
+                    <td>{contact.popularity}</td>
+                    <td className="delete-btn">
+                      <button className=" btn-delete"
+                        onClick={() => {
+                          this.delete(index);
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   }
